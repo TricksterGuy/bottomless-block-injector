@@ -167,9 +167,9 @@ def dump_puzzles(rom)
 				    row = 11
 				    break if cursor >= 6
 			    elsif bit != 0
+				    raise "row is negative" if row < 0
 				    data[[row, cursor]] = bit
 				    row -= 1
-				    raise "row became negative" if row < 0
 			    else
 			        raise "bit is 0"
 			    end
@@ -240,9 +240,12 @@ if ARGV.size() != 2 or !%w(dump inject).include?(ARGV[1].downcase)
     raise "Usage: injector.rb rom_file command\ndump to dump puzzle data\ninject to inject puzzles into rom"
 end
 
+
+
 command = ARGV[1]
 
 if command == 'dump'
+    Dir.mkdir('ta') unless File.exists?('ta')
     dump_puzzles(ARGV[0])
     print "Puzzles dumped\n"
 elsif command == 'inject'
