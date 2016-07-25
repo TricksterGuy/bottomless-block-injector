@@ -4,8 +4,10 @@ NUM_PUZZLES = 194
 PUZZLE_OFFSETS = 0x48000
 PUZZLE_DATA_OFFSET_START = 0x184
 PUZZLE_MOVES_OFFSET = 0x11235
+PUZZLE_MAX_HEIGHT_OFFSET = 0x4A6F9
 
 PUZZLE_DATA = PUZZLE_OFFSETS + PUZZLE_DATA_OFFSET_START
+
 
 # Contains data for a single puzzle
 class PuzzleBuffer
@@ -232,6 +234,9 @@ def pack_puzzles(rom)
     
     file.seek(PUZZLE_DATA)
     file.write(buffer.buffer.pack('C*'))
+    
+    file.seek(PUZZLE_MAX_HEIGHT_OFFSET)
+    file.write("\015")
     
     file.close
 end
